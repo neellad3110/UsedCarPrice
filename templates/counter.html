@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decimal Counter</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <label for="maxValue">Enter the maximum value: </label>
+    <input type="number" id="maxValue" step="0.01" min="0" placeholder="Maximum value">
+
+    <button id="startCounter">Start Counter</button>
+
+    <div id="counterOutput"></div>
+    <div id="counterOutput2"></div>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#startCounter").click(function () {
+                // Get the maximum value from the user input
+                var maxValue = parseFloat($("#maxValue").val());
+               
+                if (isNaN(maxValue) || maxValue < 0) {
+                    alert("Please enter a valid non-negative number.");
+                } else {
+                    var counter = 0; // Initialize the counter
+                    var bigstep = 1; // Step size for decimal places
+                    var smallstep =0.01; // Step size for decimal places
+
+                    // Function to update and display the counter
+                    function updateCounter() {
+                        if (counter <= parseInt(maxValue)) {
+                            // Display the counter with up to three decimal places
+                            $("#counterOutput").text(counter.toFixed(2));
+                            counter += bigstep;
+
+                            // Continue the counter after a short delay (adjust the delay as needed)
+                            setTimeout(updateCounter, 10); // 1000 milliseconds (1 second) delay
+                        }    
+                        else if(smallstep<=(maxValue-parseInt(maxValue)) && counter==parseInt(maxValue)){
+                            $("#counterOutput").text(counter.toFixed(2));
+                            smallstep+=0.01;
+                            counter += smallstep;
+
+                            // Continue the counter after a short delay (adjust the delay as needed)
+                            setTimeout(updateCounter, 100); // 1000 milliseconds (1 second) delay
+                        } else {
+                            // Counter has reached the maximum value
+                            $("#counterOutput").text(maxValue.toFixed(2));
+                        }
+                      
+                    }
+                    
+                    
+                    // Start the counter
+                    updateCounter();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
